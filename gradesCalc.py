@@ -47,9 +47,7 @@ def final_grade(input_path, output_path):
         grade = calc_grade(student_id, average)
         l1 = [student_id, average, grade]
         out_file.write(", ".join([str(l) for l in l1]) + "\n")
-    if len(id_to_average) == 0:
-        return 0
-    return int(tot_sum / len(id_to_average))
+    return 0 if len(id_to_average) == 0 else int(tot_sum / len(id_to_average))
 
 
 #### PART 2 ####
