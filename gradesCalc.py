@@ -1,3 +1,8 @@
+#### PART 1 ####
+# final_grade: Calculates the final grade for each student, and writes the output (while eliminating illegal
+# rows from the input file) into the file in `output_path`. Returns the average of the grades.
+#   input_path: Path to the file that contains the input
+#   output_path: Path to the file that will contain the output
 def is_valid_id(student_id):
     return student_id and student_id[0] != '0' and 10000000 < int(student_id) < 99999999
 
@@ -42,10 +47,31 @@ def final_grade(input_path, output_path):
         grade = calc_grade(student_id, average)
         l1 = [student_id, average, grade]
         out_file.write(", ".join([str(l) for l in l1]) + "\n")
+    if len(id_to_average) == 0:
+        return 0
+    return int(tot_sum / len(id_to_average))
 
 
-def check_strings(s1: str, s2: str) -> bool:
-    s1_hist = {}
-    for letter in s1:
-        if 'a' <= letter <= 'z':
-            s1_hist[letter] = letter
+#### PART 2 ####
+# check_strings: Checks if `s1` can be constructed from `s2`'s characters.
+#   s1: The string that we want to check if it can be constructed
+#   s2: The string that we want to construct s1 from
+def make_lower_case(let):
+    if ord('a') <= ord(let) <= ord('z'):
+        return ord(let)
+    return ord(let) - ord('A') + ord('a')
+
+
+def check_strings(s1, s2):
+    s2_hist = {}
+    for k in range(ord('a'), ord('z') + 1):
+        s2_hist[k] = 0
+    for let in s2:
+        letter = make_lower_case(let)
+        s2_hist[letter] += 1
+    for let in s1:
+        letter = make_lower_case(let)
+        if s2_hist[letter] == 0:
+            return False
+        s2_hist[letter] -= 1
+    return True
