@@ -41,10 +41,11 @@ def final_grade(input_path, output_path):
                 and is_valid_semester(semester)
                 and is_valid_avg(student_avg)):
             continue
-        id_to_average[student_id] = student_avg
-
+        id_to_average[student_id] = int(student_avg)
+    tot_sum = 0
     for student_id, average in sorted(id_to_average.items()):
         grade = calc_grade(student_id, average)
+        tot_sum = tot_sum + grade
         l1 = [student_id, average, grade]
         out_file.write(", ".join([str(l) for l in l1]) + "\n")
     return 0 if len(id_to_average) == 0 else int(tot_sum / len(id_to_average))
